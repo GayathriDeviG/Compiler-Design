@@ -1,0 +1,78 @@
+<html>
+<body>
+<script>
+stack="$";
+loc=0;
+no=prompt("Enter number of productions :");
+alert("Enter the productions");
+productions=new Array();
+for (i=0; i < no; i++)
+{
+	productions[i]=new Array(2);
+	productions[i][0]=prompt("LHS for production "+(i+1)+": ");
+	
+	productions[i][1]=prompt("RHS for production "+(i+1)+": ");
+	
+}
+document.write("The productions are:");
+document.write("</br>");
+for (i=0; i < no; i++)
+{
+	document.write(productions[i][0]+" -> "+productions[i][1]);
+	document.write("</br>");
+}
+str=prompt("Enter a space separated string: ");
+str=str+"$";
+document.write("</br></br>");
+document.write("STACK"+"&nbsp;&nbsp;&nbsp;&nbsp"+"&nbsp;&nbsp;&nbsp;&nbsp"+"INPUT");
+document.write("</br>");
+document.write(stack+"&nbsp;&nbsp;&nbsp;&nbsp"+"&nbsp;&nbsp;&nbsp;&nbsp"+"&nbsp;&nbsp;&nbsp;&nbsp"+str);
+while (loc < str.length-1)
+{
+	temp = str.substring(loc, str.indexOf(' ', loc));
+	loc = str.indexOf(' ', loc)+1;
+	for (i=0; i < no; i++)
+	{
+		if (temp==productions[i][1])
+		{
+			temp = productions[i][0];
+			break;
+		}
+	}
+	stack = stack+temp;
+	document.write("</br>");
+    document.write(stack+"&nbsp;&nbsp;&nbsp;&nbsp"+"&nbsp;&nbsp;&nbsp;&nbsp"+"&nbsp;&nbsp;&nbsp;&nbsp"+str.substring(loc, str.length));
+	for (i=0; i < no; i++)
+	{
+		if (stack=="$"+productions[i][1])
+		{
+			stack = "$"+productions[i][0];
+			break;
+		}
+	}
+ }
+for (i=0; i < no; i++)
+{
+	if (stack=="$"+productions[i][1])
+	{
+		stack = "$"+productions[i][0];
+		break;
+	}
+}
+document.write("</br>");
+document.write(stack+"&nbsp;&nbsp;&nbsp;&nbsp"+"&nbsp;&nbsp;&nbsp;&nbsp"+"&nbsp;&nbsp;&nbsp;&nbsp"+str.substring(loc, str.length));
+if (stack=="$"+productions[0][0])
+	{
+	
+	document.write("</br>");
+	document.write("Accepted.");
+	}
+else
+	{
+	document.write("</br>");
+	
+	document.write("Rejected.");
+	}
+</script>
+</body>
+</html>
